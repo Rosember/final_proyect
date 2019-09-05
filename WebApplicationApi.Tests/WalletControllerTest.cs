@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Http.Results;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WebApplicationApi.Controllers;
@@ -17,12 +18,13 @@ namespace WebApplicationApi.Tests
             WalletController controller = new WalletController();
 
             // Actuar
-            var result = controller.getMoney() as OkNegotiatedContentResult<Communicator>;
+            var result = controller.getMoney() as OkNegotiatedContentResult<List<Communicator>>;
 
             // Declarar
             Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.Content.Money);
-            Assert.AreEqual(true, result.Content.State);
+            //var list = result.Content;
+            //Assert.AreEqual(0, list.Last().Money);
+            //Assert.AreEqual(true, result.Content.State);
         }
 
         [TestMethod]

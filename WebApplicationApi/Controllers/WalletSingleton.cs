@@ -2,18 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WebApplicationApi.Models;
 
 namespace WebApplicationApi.Controllers
 {
     public class WalletSingleton
     {
         private readonly static WalletSingleton _instance = new WalletSingleton();
-        private List<decimal> statements;
+        private List<Communicator> statements;
 
         private WalletSingleton()
         {
-            statements = new List<decimal>();
-            statements.Add(0);
+            statements = new List<Communicator>();
+            statements.Add(new Communicator()
+            {
+                Message = "Correcto",
+                Money = 0,
+                State = true
+            });
         }
 
         public static WalletSingleton Instance
@@ -24,7 +30,7 @@ namespace WebApplicationApi.Controllers
             }
         }
 
-        public List<decimal> getStatements()
+        public List<Communicator> getStatements()
         {
             return statements;
         }

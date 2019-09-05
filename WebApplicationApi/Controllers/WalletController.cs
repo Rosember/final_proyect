@@ -15,25 +15,16 @@ namespace WebApplicationApi.Controllers
 
         [HttpGet]
         [Route("getMoney")]
-        //[ActionName("getMoney")]
         public IHttpActionResult getMoney()
         {
             var wallet = WalletSingleton.Instance;
-
-            Communicator communicator = new Communicator
-            {
-                Message = "Correcto",
-                Money = wallet.getStatements().Last(),
-                State = true
-            };
-            return Ok(communicator);
+            return Ok(wallet.getStatements());
         }
 
-        [HttpPut]
-        [Route("addMoney")]
-        //[Route("addMoney/{money}")]
+        [HttpGet]
+        [Route("addMoney/{money}")]
         //[ActionName("addMoney")]
-        public IHttpActionResult addMoney([FromBody]decimal money)
+        public IHttpActionResult addMoney(decimal money)
         {
             var wallet = WalletSingleton.Instance;
             var last = wallet.getStatements().Last();
@@ -42,17 +33,18 @@ namespace WebApplicationApi.Controllers
             if (money <= 0)
             {
                 communicator.Message = "Solo valores positivos";
-                communicator.Money = wallet.getStatements().Last();
+                communicator.Money = last.Money;
                 communicator.State = false;
                 return Ok(communicator);
             }
 
-            var currentBalance = last + money;
-            wallet.getStatements().Add(currentBalance);
+            var currentBalance = last.Money + money;
 
             communicator.Message = "Correcto";
-            communicator.Money = wallet.getStatements().Last();
+            communicator.Money = currentBalance;
             communicator.State = true;
+
+            wallet.getStatements().Add(communicator);
             return Ok(communicator);
 
         }
@@ -66,28 +58,29 @@ namespace WebApplicationApi.Controllers
             var last = wallet.getStatements().Last();
 
             Communicator communicator = new Communicator();
+            communicator.Money = wallet.getStatements().Last().Money;
+            communicator.State = false;
+
             if (money <= 0)
             {
                 communicator.Message = "Solo valores positivos";
-                communicator.Money = wallet.getStatements().Last();
-                communicator.State = false;
                 return Ok(communicator);
             }
 
-            if (money > last)
+            if (money > last.Money)
             {
                 communicator.Message = "Saldo insuficiente";
-                communicator.Money = wallet.getStatements().Last();
-                communicator.State = false;
                 return Ok(communicator);
             }
 
-            var currentBalance = last - money;
-            wallet.getStatements().Add(currentBalance);
+            var currentBalance = last.Money - money;
+            
 
             communicator.Message = "Correcto";
-            communicator.Money = wallet.getStatements().Last();
+            communicator.Money = currentBalance;
             communicator.State = true;
+
+            wallet.getStatements().Add(communicator);
             return Ok(communicator);
         }
     }
