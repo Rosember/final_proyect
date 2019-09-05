@@ -12,7 +12,7 @@ namespace WebApplicationApi.Tests
     {
 
         [TestMethod]
-        public void greaterThanZero()
+        public void isNotNull()
         {
             // Disponer
             WalletController controller = new WalletController();
@@ -22,9 +22,6 @@ namespace WebApplicationApi.Tests
 
             // Declarar
             Assert.IsNotNull(result);
-            //var list = result.Content;
-            //Assert.AreEqual(0, list.Last().Money);
-            //Assert.AreEqual(true, result.Content.State);
         }
 
         [TestMethod]
@@ -55,7 +52,6 @@ namespace WebApplicationApi.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual(300, result.Content.Money);
             Assert.AreEqual(true, result.Content.State);
-            Assert.AreEqual("Correcto", result.Content.Message);
 
         }
 
@@ -103,6 +99,21 @@ namespace WebApplicationApi.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual("Solo valores positivos", result.Content.Message);
             Assert.AreEqual(false, result.Content.State);
+
+        }
+
+        [TestMethod]
+        public void addNumberDecimal()
+        {
+            // Disponer
+            WalletController controller = new WalletController();
+
+            // Actuar
+            var result = controller.addMoney(10.55M) as OkNegotiatedContentResult<Communicator>;
+
+            // Declarar
+            Assert.IsNotNull(result);
+            Assert.AreEqual(true, result.Content.State);
 
         }
     }

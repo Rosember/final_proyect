@@ -35,26 +35,60 @@ namespace ConsumeWebApi.Controllers
 
             return View(wallet);
         }
-
-        public async Task<ActionResult> Agregar()
+        
+        public ActionResult AgregarSaldo()
         {
-            List<Wallet> wallet = new List<Wallet>();
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> RegistrarSaldo(decimal ingreso)
+        {
+            Wallet wallet = new Wallet();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(BaseUrl);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage res = await client.GetAsync("api/wallet/getmoney");
+                HttpResponseMessage res = await client.GetAsync("api/wallet/addMoney/"+ ingreso +"/");
                 if (res.IsSuccessStatusCode)
                 {
                     var empResponse = res.Content.ReadAsStringAsync().Result;
 
-                    wallet = JsonConvert.DeserializeObject<List<Wallet>>(empResponse);
+                    wallet = JsonConvert.DeserializeObject<Wallet>(empResponse);
                 }
             }
 
-            return View(wallet);
+            return RedirectToAction("Index");
         }
+
+
+        public ActionResult RetirarSaldo()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> RegistrarSalidaDeSaldo(decimal ingreso)
+        {
+            Wallet wallet = new Wallet();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUrl);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage res = await client.GetAsync("api/wallet/subtractMoney/" + ingreso + "/");
+                if (res.IsSuccessStatusCode)
+                {
+                    var empResponse = res.Content.ReadAsStringAsync().Result;
+
+                    wallet = JsonConvert.DeserializeObject<Wallet>(empResponse);
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
     }
 }
