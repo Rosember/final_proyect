@@ -34,7 +34,7 @@ namespace WebApplicationApi.Controllers
             {
                 var currentBalance = last.Money + money;
 
-                communicator.Message = "Correcto, agregado: " + money;
+                communicator.Message = "Correcto, ingreso: " + money;
                 communicator.Money = currentBalance;
                 communicator.State = true;
             }
@@ -65,7 +65,7 @@ namespace WebApplicationApi.Controllers
                 if (TieneSaldoSuficiente(money, last.Money))
                 {
                     var currentBalance = last.Money - money;
-                    communicator.Message = "Correcto, retiro de: " + money;
+                    communicator.Message = "Correcto, egreso: " + money;
                     communicator.Money = currentBalance;
                     communicator.State = true;
                 }
