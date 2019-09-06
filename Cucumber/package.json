@@ -1,0 +1,26 @@
+{
+  "name": "cucumber_test",
+  "version": "1.0.0",
+  "description": "Pruebas de Integracion y pruebas de UI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rosember/final_proyect.git"
+  },
+  "author": "Rosember",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rosember/final_proyect/issues"
+  },
+  "homepage": "https://github.com/Rosember/final_proyect#readme",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "cucumber": "^5.1.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
+    "selenium-webdriver": "^4.0.0-alpha.4"
+  }
+}
