@@ -5,7 +5,7 @@ const httpClient = require("request-promise");
 
 
 
-let urbamanagerResponse = undefined;
+
 
 Given('the opening balance in the wallet', function () {
 
