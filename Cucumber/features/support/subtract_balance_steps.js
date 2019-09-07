@@ -22,14 +22,14 @@ Given('the opening balance in the wallet', function () {
   });
 
   Then('you\'ll get a message {string}', async function (saldo_insuficiente) {
+    let urbamanager = this;
     await httpClient(this.httpOptions)
       .then(function (respose){
-        urbamanagerResponse = respose;
+        urbamanager.setTo(respose);
       })
       .catch(function(error){
-        urbamanagerResponse = error;
+        urbamanager.setToError(error);
       });
-      console.log(urbamanagerResponse.statusCode);
-      expect(urbamanagerResponse.body.Message).to.eql(saldo_insuficiente);
+      expect(this.urbamanagerResponse.body.Message).to.eql(saldo_insuficiente);
     
   });

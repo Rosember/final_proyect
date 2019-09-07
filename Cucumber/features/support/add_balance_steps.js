@@ -3,7 +3,6 @@ const { Given, When, Then } = require("cucumber");
 const { expect } = require("chai");
 const httpClient = require("request-promise");
 
-//let urbamanagerResponse = undefined;
 
 Given('the opening balance in the wallet at {float}', function (saldo) {
     
@@ -19,14 +18,13 @@ Given('the opening balance in the wallet at {float}', function (saldo) {
   });
 
   Then('the result will be true value.', async function () {
-    let urbamanagerResponse = this;
+    let urbamanager = this;
     await httpClient(this.httpOptions)
       .then(function(response) {
-        //urbamanagerResponse = response;
-        urbamanagerResponse.setTo(response);
+        urbamanager.setTo(response);
       })
       .catch(function(error) {
-        urbamanagerResponse = error;
+        urbamanager.setToError(error);
       });
       expect(this.urbamanagerResponse.body.State).to.eql(true);
   });
